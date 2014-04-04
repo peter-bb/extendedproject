@@ -1,0 +1,132 @@
+output pinC.0
+output pinC.1
+output pinC.2
+output pinC.3
+
+output pinC.4
+
+symbol clk = pinB.0
+symbol progcount=b0
+symbol decIO=b1
+
+symbol IOcurrent0=pinB.1
+symbol IOcurrent1=pinB.2
+symbol IOcurrent2=pinB.3
+symbol IOcurrent3=pinB.4
+
+symbol ALUcurrent0=pinA.0
+symbol ALUcurrent1=pinA.1
+symbol ALUcurrent2=pinA.2
+symbol ALUcurrent3=pinA.3 
+
+symbol error=pinC.4
+
+symbol numA=b2
+symbol numB=b3
+symbol func=b4
+
+symbol numA00=bit0
+symbol numA01=bit1
+symbol numA02=bit2
+symbol numA03=bit3
+symbol numA10=bit4
+symbol numA11=bit5
+symbol numA12=bit6
+symbol numA13=bit7
+
+symbol numB00=bit8
+symbol numB01=bit9
+symbol numB02=bit10
+symbol numB03=bit11
+symbol numB10=bit12
+symbol numB11=bit13
+symbol numB12=bit14
+symbol numB13=bit15
+
+symbol func00=bit16
+symbol func01=bit17
+symbol func02=bit18
+symbol func03=bit19
+
+symbol ans00=bit20
+symbol ans01=bit21
+symbol ans02=bit22
+symbol ans03=bit23
+symbol ans10=bit24
+symbol ans11=bit25
+symbol ans12=bit26
+symbol ans13=bit27
+symbol ans20=bit28
+symbol ans21=bit29
+symbol ans22=bit30
+symbol ans23=bit31
+symbol ans30
+symbol ans31
+symbol ans32
+symbol ans33
+symbol ans40
+symbol ans41
+symbol ans42
+symbol ans43
+
+main:
+if clk=1 then goto store
+goto main
+
+store:
+decIO=(IOcurrent3*8)+(IOcurrent2*4)+(IOcurrent1*2)+(IOcurrent0*1)
+if decIO=15 then goto clear
+if progcount=0 then goto numA0
+if progcount=1 then goto numA1
+if progcount=2 then goto func0
+if progcount=3 then goto numB0
+if progcount=4 then goto numB1
+if progcount=5 then goto ans0
+if progcount=6 then goto ans1
+if progcount=7 then goto ans2
+if progcount=8 then goto ans3
+if progcount=9 then goto ans4
+if progcount>9 then goto reset
+
+clear:
+numA00=0
+numA01=0
+numA02=0
+numA03=0
+numA10=0
+numA11=0
+numA12=0
+numA13=0
+func0=0
+func
+
+
+error:
+error=1
+
+numA0:
+if decIO>9 then goto error
+numA00=IOcurrent0
+numA01=IOcurrent1
+numA02=IOcurrent2
+numA03=IOcurrent3
+progcount=progcount+1
+goto main
+
+numA1:
+if decIO>9 then goto func0
+else
+numA10=IOcurrent0
+numA11=IOcurrent1
+numA12=IOcurrent2
+numA13=IOcurrent3
+progcount=progcount+1
+goto main
+
+func0:
+progcount=3
+func00=IOcurrent0
+func01=IOcurrent1
+func02=IOcurrent2
+func03=IOcurrent3
+goto main
