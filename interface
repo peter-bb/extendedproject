@@ -1,0 +1,260 @@
+input A.0
+input A.1
+input A.2
+input A.3
+input C.0
+input C.1
+input C.2
+input C.3
+input C.4
+input C.5
+
+input B.2
+input B.3
+input B.4
+input B.5
+input B.6
+input B.7
+
+output C.6
+output C.7
+output B.0
+output B.1
+
+output D.0
+
+symbol progcount=b0
+
+symbol zerokey = pinA.0
+symbol onekey = pinA.1
+symbol twokey = pinA.2
+symbol threekey = pinA.3
+symbol fourkey = pinC.0
+symbol fivekey = pinC.1
+symbol sixkey = pinC.2
+symbol sevenkey = pinC.3
+symbol eightkey = pinC.4
+symbol ninekey = pinC.5
+
+symbol addkey=pinB.2
+symbol subkey=pinB.3
+symbol mulkey=pinB.4
+symbol divkey=pinB.5
+symbol exekey=pinB.6
+symbol clrkey=pinB.7
+
+symbol oneout = pinC.6
+symbol twoout = pinC.7
+symbol fourout = pinB.0
+symbol eightout = pinB.1
+
+symbol clock = pinD.0
+
+main: 
+if zerokey = 1 then goto zero
+if onekey = 1 then goto one
+if twokey=1 then goto two
+if threekey=1 then goto three
+if fourkey=1 then goto four 
+if fivekey = 1 then goto five
+if sixkey = 1 then goto six
+if sevenkey = 1 then goto seven
+if eightkey = 1 then goto eight
+if ninekey = 1 then goto nine
+goto main
+
+secondbtn:
+if zerokey = 1 then goto zero
+if onekey = 1 then goto one
+if twokey=1 then goto two
+if threekey=1 then goto three
+if fourkey=1 then goto four 
+if fivekey = 1 then goto five
+if sixkey = 1 then goto six
+if sevenkey = 1 then goto seven
+if eightkey = 1 then goto eight
+if ninekey = 1 then goto nine
+if addkey = 1 then goto add
+if subkey =1 then goto sub
+if mulkey = 1 then goto mul
+if divkey = 1 then goto div
+if exekey = 1 then goto exe
+if clrkey = 1 then goto clr
+goto secondbtn
+
+thirdbtn:
+if addkey = 1 then goto add
+if subkey = 1 then goto sub
+if mulkey = 1 then goto mul
+if divkey = 1 then goto div
+if exekey = 1 then goto exe
+if clrkey = 1 then goto clr
+goto thirdbtn
+
+fourthbtn:
+if zerokey = 1 then goto zero
+if onekey = 1 then goto one
+if twokey=1 then goto two
+if threekey=1 then goto three
+if fourkey=1 then goto four 
+if fivekey = 1 then goto five
+if sixkey = 1 then goto six
+if sevenkey = 1 then goto seven
+if eightkey = 1 then goto eight
+if ninekey = 1 then goto nine
+if clrkey = 1 then goto clr
+goto fourthbtn
+
+fifthbtn:
+if zerokey = 1 then goto zero
+if onekey = 1 then goto one
+if twokey=1 then goto two
+if threekey=1 then goto three
+if fourkey=1 then goto four 
+if fivekey = 1 then goto five
+if sixkey = 1 then goto six
+if sevenkey = 1 then goto seven
+if eightkey = 1 then goto eight
+if ninekey = 1 then goto nine
+if exekey = 1 then goto exe
+if clrkey = 1 then goto clr
+goto fifthbtn
+
+sixthbtn:
+if exekey = 1 then goto exe
+if clrkey = 1 then goto clr
+goto sixthbtn
+
+zero:
+oneout=0
+twoout=0
+fourout=0
+eightout=0
+goto nextstep
+
+one:
+oneout=1
+twoout=0
+fourout=0
+eightout=0
+goto nextstep
+
+two:
+oneout=0
+twoout=1
+fourout=0
+eightout=0
+goto nextstep
+
+three:
+oneout=1
+twoout=1
+fourout=0
+eightout=0
+goto nextstep
+
+four:
+oneout=0
+twoout=0
+fourout=1
+eightout=0
+goto nextstep
+
+five:
+oneout=1
+twoout=0
+fourout=1
+eightout=0
+goto nextstep
+
+six:
+oneout=0
+twoout=1
+fourout=1
+eightout=0
+goto nextstep
+
+seven:
+oneout=1
+twoout=1
+fourout=1
+eightout=0
+goto nextstep
+
+eight:
+oneout=0
+twoout=0
+fourout=0
+eightout=1
+goto nextstep
+
+nine:
+oneout=1
+twoout=0
+fourout=0
+eightout=1
+goto nextstep
+
+add:
+oneout=0
+twoout=1
+fourout=0
+eightout=1
+progcount=2
+goto nextstep
+
+sub:
+oneout=1
+twoout=1
+fourout=0
+eightout=1
+progcount=2
+goto nextstep
+
+mul:
+oneout=0
+twoout=0
+fourout=1
+eightout=1
+progcount=2
+goto nextstep
+
+div:
+oneout=1
+twoout=0
+fourout=1
+eightout=1
+progcount=2
+goto nextstep
+
+exe:
+oneout=0
+twoout=1
+fourout=1
+eightout=1
+progcount=5
+goto nextstep
+
+clr:
+oneout=1
+twoout=1
+fourout=1
+eightout=1
+progcount=5
+goto nextstep
+
+nextstep:
+clock=1
+clock=0 
+inc progcount
+if progcount = 0 then goto main
+if progcount = 1 then goto secondbtn
+if progcount = 2 then goto thirdbtn
+if progcount = 3 then goto fourthbtn
+if progcount = 4 then goto fifthbtn
+if progcount = 5 then goto sixthbtn
+if progcount > 5 then goto restart
+
+restart:
+progcount=0
+goto main
